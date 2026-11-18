@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="AcceleratedKAZE/AcceleratedKAZE.csproj" />
+  <Project Path="AcceleratedKAZE.Tests/AcceleratedKAZE.Tests.csproj" />
+</Solution>

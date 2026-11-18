@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net10.0;net11.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
+    <PackageId>AcceleratedKAZE</PackageId>
+    <Version>0.0.1-beta</Version>
+    <Authors>Cularr</Authors>
+    <Description>A managed .NET implementation of the AKAZE feature detector and the TEBLID descriptor that matches OpenCV's implementation.</Description>
+    <PackageTags>akaze;teblid;opencv;features;keypoints;descriptors</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>MIT AND Apache-2.0</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/Cularr/AcceleratedKAZE</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
+    <None Include="..\LICENSE" Pack="true" PackagePath="\" />
+    <None Include="..\LICENSE-OPENCV" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>
