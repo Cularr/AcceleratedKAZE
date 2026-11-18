@@ -48,26 +48,29 @@ for width, height in ((200, 60), (200, 59), (200, 58), (60, 200), (59, 200)):
     narrow.tofile(folder / f"narrow-{width}x{height}.gray")
     akaze(f"narrow-{width}x{height}", narrow)
 
-rng = np.random.default_rng(125)
-with (folder / "synthetic.teblid").open("wb") as out:
-    for channels in (1, 3, 4):
-        image = rng.integers(0, 256, (80, 97, channels), dtype=np.uint8)
-        if channels == 1:
-            image = image[:, :, 0]
-        points = [cv2.KeyPoint(x, y, size, angle) for x, y in [(0., 0.), (96.75, 79.75), (48.5, 41.25), (8., 72.)]
-                  for size in (1., 8., 27.) for angle in (-1., 0., 45., 90., 217.25)]
-        for scale in (1., 5., 6.75):
-            teblid(out, np.ascontiguousarray(image), points, scale)
-    for width in (7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 65):
-        image = rng.integers(128, 256, (39, width), dtype=np.uint8)
-        points = [cv2.KeyPoint(x, y, 3.25, 63) for x, y in ((0., 0.), (width / 2, 19.), (width - 1., 38.))]
-        teblid(out, image, points, 5)
-    teblid(out, np.zeros((1, 1), np.uint8), [cv2.KeyPoint(0, 0, 1)], 5)
-    teblid(out, np.zeros((16, 16), np.uint8), [], 5)
-with (folder / "box.teblid").open("wb") as out:
-    teblid(out, box, box_points, 5)
-with (folder / "graf1.teblid").open("wb") as out:
-    teblid(out, graf, graf_points, 5)
+if hasattr(cv2, "xfeatures2d"):
+    rng = np.random.default_rng(125)
+    with (folder / "synthetic.teblid").open("wb") as out:
+        for channels in (1, 3, 4):
+            image = rng.integers(0, 256, (80, 97, channels), dtype=np.uint8)
+            if channels == 1:
+                image = image[:, :, 0]
+            points = [cv2.KeyPoint(x, y, size, angle) for x, y in [(0., 0.), (96.75, 79.75), (48.5, 41.25), (8., 72.)]
+                      for size in (1., 8., 27.) for angle in (-1., 0., 45., 90., 217.25)]
+            for scale in (1., 5., 6.75):
+                teblid(out, np.ascontiguousarray(image), points, scale)
+        for width in (7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 65):
+            image = rng.integers(128, 256, (39, width), dtype=np.uint8)
+            points = [cv2.KeyPoint(x, y, 3.25, 63) for x, y in ((0., 0.), (width / 2, 19.), (width - 1., 38.))]
+            teblid(out, image, points, 5)
+        teblid(out, np.zeros((1, 1), np.uint8), [cv2.KeyPoint(0, 0, 1)], 5)
+        teblid(out, np.zeros((16, 16), np.uint8), [], 5)
+    with (folder / "box.teblid").open("wb") as out:
+        teblid(out, box, box_points, 5)
+    with (folder / "graf1.teblid").open("wb") as out:
+        teblid(out, graf, graf_points, 5)
+else:
+    print("This OpenCV build has no TEBLID. The committed TEBLID references are kept.")
 
 y, x = np.mgrid[0:121, 0:161]
 color = np.stack([(x * 255 // 160), (y * 255 // 120), ((x + y) * 255 // 280)], axis=2).astype(np.int32)
